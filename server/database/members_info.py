@@ -13,9 +13,9 @@ class MembersInfo:
 
     def __init__(self, member_name, member_id, member_status, member_activity):
         # Below makes sure that all of the arguments are set as a string type (except for the now_time).
-        self.member_name = f'{member_name}'
-        self.member_id = f'{member_id}'
-        self.member_status = f'{member_status}'
-        self.member_activity = f'{member_activity}'
+        self.member_name = f"{member_name}"
+        self.member_id = f"{member_id}"
+        self.member_status = f"{member_status}"
+        self.member_activity = f"{member_activity}"
 
         self.now_time = int(datetime.timestamp(datetime.now()))

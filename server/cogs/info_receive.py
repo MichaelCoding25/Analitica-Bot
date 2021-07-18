@@ -41,9 +41,11 @@ class DataReceive(commands.Cog):
             all_members = []
             for guild in guilds:
                 for member in guild.members:
-                    member_name = f'{member.name}#{member.discriminator}'
+                    member_name = f"{member.name}#{member.discriminator}"
 
-                    activities_list = []  # Makes a list of all activities the user is currently doing.
+                    activities_list = (
+                        []
+                    )  # Makes a list of all activities the user is currently doing.
                     for activity in member.activities:
                         if activity.type is discord.ActivityType.streaming:
                             activities_list.append("Streaming")
@@ -71,10 +73,14 @@ class DataReceive(commands.Cog):
                         current_activity = "Unknown"
 
                     # Creates an object for this member.
-                    new_member = MembersInfo(member_name, member.id, member.status, current_activity)
+                    new_member = MembersInfo(
+                        member_name, member.id, member.status, current_activity
+                    )
                     all_members.append(new_member)
 
-            unique_members = []  # Only inputs into the database logs of unique members as to not input the same
+            unique_members = (
+                []
+            )  # Only inputs into the database logs of unique members as to not input the same
             # member twice in the same log.
             for mem in all_members:
                 if all(map(lambda un_mem: un_mem.member_id != mem.member_id, unique_members)):
@@ -93,8 +99,13 @@ class DataReceive(commands.Cog):
                         is_in = True
                         break
                 if not is_in:
-                    c.execute("INSERT INTO activities(id, act_name) VALUES (?, ?)", (len(activities_old) + 1,
-                                                                                     str(u_mem.member_activity),))
+                    c.execute(
+                        "INSERT INTO activities(id, act_name) VALUES (?, ?)",
+                        (
+                            len(activities_old) + 1,
+                            str(u_mem.member_activity),
+                        ),
+                    )
                 conn.commit()
 
                 # Takes the data from the object and inserts into database
@@ -114,8 +125,10 @@ class DataReceive(commands.Cog):
                         activity_id = activity[0]
                         break
 
-                c.execute("INSERT INTO members_info VALUES (?, ?, ?, ?)", (u_mem.member_id, u_mem.now_time, status_id,
-                                                                           activity_id))
+                c.execute(
+                    "INSERT INTO members_info VALUES (?, ?, ?, ?)",
+                    (u_mem.member_id, u_mem.now_time, status_id, activity_id),
+                )
                 conn.commit()
             conn.close()
             print(f'get_member_db completed || {datetime.today().strftime("%b %d %Y %H:%M")}')
