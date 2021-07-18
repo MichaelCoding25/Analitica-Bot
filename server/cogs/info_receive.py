@@ -130,10 +130,12 @@ class DataReceive(commands.Cog):
                 )
                 conn.commit()
             conn.close()
-            print(f'get_member_db completed || {datetime.today().strftime("%b %d %Y %H:%M")}')
+            print(f'get_member_db completed || {datetime.today().strftime(f"%b %d %Y %H:%M")}')
+            print()
         except Exception as e:
-            print(f'get_member_db failed || {datetime.today().strftime("%b %d %Y %H:%M")}')
-            print(str(e))
+            print(f'get_member_db failed || {datetime.today().strftime(f"%b %d %Y %H:%M")}')
+            print("Error: " + str(e))
+            print()
 
 
 def setup(client):

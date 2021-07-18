@@ -410,7 +410,7 @@ class StatCommands(commands.Cog):
                     f" {ctx.message.author.mention}"
                 )
             except Exception as e:
-                print(e)
+                print("Error: " + str(e))
                 return_message = "error"
                 return_img = ""
 
@@ -456,7 +456,7 @@ class StatCommands(commands.Cog):
                     f" {ctx.message.author.mention}"
                 )
             except Exception as e:
-                print(e)
+                print("Error: " + str(e))
                 return_message = "error"
                 return_img = ""
 
@@ -509,7 +509,7 @@ class StatCommands(commands.Cog):
                     f" {ctx.message.author.mention}"
                 )
             except Exception as e:
-                print(e)
+                print("Error: " + str(e))
                 return_message = "error"
                 return_img = ""
 
@@ -560,7 +560,7 @@ class StatCommands(commands.Cog):
                     f"day.\nRequested by {ctx.message.author.mention} "
                 )
             except Exception as e:
-                print(e)
+                print("Error: " + str(e))
                 return_message = "error"
                 return_img = ""
 

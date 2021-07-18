@@ -1,10 +1,11 @@
 # Main bot file, starts the bot and everything else from here
 import discord
 import os
+from dotenv import load_dotenv
 from datetime import datetime
 from discord.ext import commands, tasks
 
-from server.database.database_sqlite import *
+import server.database.database_sqlite as db
 
 # The prefix of the commands that the bot uses
 BOT_PREFIX = "."
@@ -12,6 +13,8 @@ client = commands.Bot(command_prefix=BOT_PREFIX)
 client.remove_command("help")
 
 HAS_STARTED_DATABASE = False
+
+CURRENT_DIR = os.getcwd().replace("\\", "/")  # The current directory the bot is sitting in.
 
 
 @client.event
@@ -23,14 +26,15 @@ async def on_ready():
     """
     global HAS_STARTED_DATABASE
     print("Bot is ready")
-    delete_extra_db_logs.start()
     if not HAS_STARTED_DATABASE:
-        create_members_info_table()
-        create_activities_table()
-        create_statuses_table()
+        db.create_members_info_table()
+        db.create_activities_table()
+        db.create_statuses_table()
         # create_perms_tables() 'It is not being used yet so it is not being created.'
         HAS_STARTED_DATABASE = True
         print("Database is ready")
+
+    delete_extra_db_logs.start()
 
 
 @client.command(pass_context=True, aliases=["Help", "HELP"])
@@ -102,28 +106,38 @@ async def help(ctx, *cog):
         await ctx.send("Excuse me, I can't send embeds.")
 
 
-@tasks.loop(seconds=24)
+@tasks.loop(hours=24)
 async def delete_extra_db_logs():
-    handle_database_overdraft()
-    print(f'Purged Database || {datetime.today().strftime("%b %d %Y %H:%M")}')
+    db.handle_database_overdraft()
 
 
-def launch(token):
+def launch():
     """
     Loads all of the cogs and starts the bot with the discord application.
-    :param token: The token provided by Discord Application in order to authenticate the bot
-     (Required in order to connect the bot to the Discord servers).
     """
+    print()
+    print("-------------------------------")
+    print("Starting Analitica Discord Bot.")
+    print("-------------------------------")
+
     # Load all the cogs from the files in the cogs folder on startup of bot.
     for filename in os.listdir("./server/cogs"):
         if filename.endswith(".py"):
             try:
                 client.load_extension(f"server.cogs.{filename[:-3]}")
-            except:
+            except Exception as e:
                 print(f"Was unable to load {filename} cog")
+                print("Error: " + str(e))
 
     # Attempt to start the bot.
     try:
-        client.run(token)
+        load_dotenv()
+        client.run(
+            os.getenv("DISCORD_TOKEN")
+        )  # This is the token that the bot will use to connect to discord.
     except discord.errors.LoginFailure:
-        print("You have entered an improper token.")
+        print("You have entered an improper token in the .env file.")
+
+
+if __name__ == "__main__":
+    launch()

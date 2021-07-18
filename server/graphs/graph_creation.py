@@ -2,7 +2,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from start import CURRENT_DIR as CD
+from bot import CURRENT_DIR as CD
 
 GRAPHS_DIRECTORY = CD + "/server/graphs"
 

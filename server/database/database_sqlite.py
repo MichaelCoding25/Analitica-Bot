@@ -1,7 +1,7 @@
 # Handles the database
 import sqlite3
 
-from start import CURRENT_DIR as CD
+from bot import CURRENT_DIR as CD
 
 MEMBERS_DATABASE_DIRECTORY = CD + "/server/database/members.db"
 
@@ -24,8 +24,10 @@ def create_members_info_table():
         """
         )
         conn.commit()
-    except:
+    except Exception as e:
         print("Was unable to create the members_info table in the Database.")
+        print("Error: " + str(e))
+        print()
     conn.close()
 
 
@@ -45,8 +47,10 @@ def create_activities_table():
         """
         )
         conn.commit()
-    except:
+    except Exception as e:
         print("Was unable to create the activities table in the Database.")
+        print("Error: " + str(e))
+        print()
     conn.close()
 
 
@@ -78,8 +82,10 @@ def create_statuses_table():
             """
             )
             conn.commit()
-    except:
+    except Exception as e:
         print("Was unable to create the statuses table in the Database.")
+        print("Error: " + str(e))
+        print()
     conn.close()
 
 
@@ -113,19 +119,28 @@ def create_perms_tables():
                      ('d_mem', 1, 0, 0, 0, 0);
         """
         )
-    except:
+    except Exception as e:
         print("Was unable to create the role_perms table in the Database.")
+        print("Error: " + str(e))
+        print()
     conn.commit()
     conn.close()
 
 
 def handle_database_overdraft():
-    conn = sqlite3.connect()
-    cursor = conn.cursor()
-    days_string = f"-20 days"
-    cursor.execute(
-        "DELETE FROM members_info WHERE date_time <" "strftime('%s',datetime('now',?))",
-        days_string,
-    )
+    conn = sqlite3.connect(MEMBERS_DATABASE_DIRECTORY)
+    c = conn.cursor()
+    try:
+        days_string = f"-20 days"
+        c.execute(
+            f"DELETE FROM members_info WHERE date_time < strftime('%s',datetime('now',?))",
+            days_string,
+        )
+        print(f'Purged Database || {datetime.today().strftime(f"%b %d %Y %H:%M")}')
+        print()
+    except Exception as e:
+        print("Was unable to remove old entries from members_info Database.")
+        print("Error: " + str(e))
+        print()
     conn.commit()
     conn.close()
