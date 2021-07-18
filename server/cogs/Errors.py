@@ -1,12 +1,10 @@
+import discord
 import sys
 import traceback
-
+from datetime import datetime
 from discord.ext import commands
-import discord
 
 from server.cogs.info_send import StatCommands
-
-from datetime import datetime
 
 
 class Errors(commands.Cog):

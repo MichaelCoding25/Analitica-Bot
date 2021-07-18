@@ -1,5 +1,6 @@
 # Handles the database
 import sqlite3
+
 from start import CURRENT_DIR as CD
 
 MEMBERS_DATABASE_DIRECTORY = CD + "/server/database/members.db"

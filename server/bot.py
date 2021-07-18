@@ -1,12 +1,10 @@
 # Main bot file, starts the bot and everything else from here
-import os
-
 import discord
+import os
+from datetime import datetime
 from discord.ext import commands, tasks
 
 from server.database.database_sqlite import *
-
-from datetime import datetime
 
 # The prefix of the commands that the bot uses
 BOT_PREFIX = "."

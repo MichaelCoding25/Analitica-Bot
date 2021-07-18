@@ -1,7 +1,6 @@
+import discord
 import sqlite3
 from datetime import datetime
-
-import discord
 from discord.ext import commands, tasks
 
 from server.database.database_sqlite import MEMBERS_DATABASE_DIRECTORY

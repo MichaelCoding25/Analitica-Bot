@@ -1,9 +1,8 @@
+import discord
 import os
 import re
 import sqlite3
 from datetime import datetime
-
-import discord
 from discord.ext import commands
 
 import server.graphs.graph_creation as gc

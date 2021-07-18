@@ -1,5 +1,6 @@
-from server import bot
 import os
+
+from server import bot
 
 CURRENT_DIR = os.getcwd().replace("\\", "/")  # The current directory the bot is sitting in.
 
