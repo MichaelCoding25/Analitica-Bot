@@ -1,9 +1,9 @@
 # Main bot file, starts the bot and everything else from here
-import discord
 import os
-from dotenv import load_dotenv
-from datetime import datetime
+
+import discord
 from discord.ext import commands, tasks
+from dotenv import load_dotenv
 
 import server.database.database_sqlite as db
 
