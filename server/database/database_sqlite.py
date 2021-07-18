@@ -137,7 +137,8 @@ def handle_database_overdraft():
             f"DELETE FROM members_info WHERE date_time < strftime('%s',datetime('now',?))",
             days_string,
         )
-        print(f'Purged Database || {datetime.today().strftime(f"%b %d %Y %H:%M")}')
+        print(
+            f'Purged Database || {datetime.today().strftime(f"%b %d %Y %H:%M")}')
         print()
     except Exception as e:
         print("Was unable to remove old entries from members_info Database.")

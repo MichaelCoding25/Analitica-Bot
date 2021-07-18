@@ -45,7 +45,8 @@ def create_status_pie_graph(stats_list):
         colors_list.append("red")
 
     fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, labels=labels, autopct="%1.1f%%", startangle=0, colors=colors_list)
+    ax1.pie(sizes, labels=labels, autopct="%1.1f%%",
+            startangle=0, colors=colors_list)
     ax1.axis("equal")
     plt.legend()
     plt.savefig(GRAPHS_DIRECTORY + "/status_pie_graph.png")

@@ -24,7 +24,8 @@ def member_security_check(ctx, member: str):
     is_in_server = False
     try:
         for mem in ctx.guild.members:
-            if re.search("[a-zA-Z]", member):  # If member was requested via name and discriminator
+            # If member was requested via name and discriminator
+            if re.search("[a-zA-Z]", member):
                 if member == str(mem.name + "#" + mem.discriminator):
                     is_in_server = True
             else:  # If member was requested via discord ID
@@ -105,9 +106,11 @@ class StatCommands(commands.Cog):
                 discord_member = ctx.guild.get_member(int(member))
 
             if str(stat_type).lower() == "status":
-                return_msg = self.member_last_status(ctx, stat_name, discord_member)
+                return_msg = self.member_last_status(
+                    ctx, stat_name, discord_member)
             elif str(stat_type).lower() == "activity":
-                return_msg = self.member_last_activity(ctx, stat_name, discord_member)
+                return_msg = self.member_last_activity(
+                    ctx, stat_name, discord_member)
             else:
                 return await ctx.send(
                     f"{ctx.message.author.mention} ```css\n [ERROR] You failed to provide a valid"
@@ -173,7 +176,8 @@ class StatCommands(commands.Cog):
         c.execute("SELECT * FROM statuses")
         statuses = c.fetchall()
         c.execute(
-            "SELECT * FROM members_info WHERE mem_id = ? OR mem_id = ?", (member.id, member_name)
+            "SELECT * FROM members_info WHERE mem_id = ? OR mem_id = ?", (
+                member.id, member_name)
         )
         instances = c.fetchall()
         c.close()
@@ -237,7 +241,8 @@ class StatCommands(commands.Cog):
         c.execute("SELECT * FROM activities")
         activities = c.fetchall()
         c.execute(
-            "SELECT * FROM members_info WHERE mem_id = ? OR mem_id = ?", (member.id, member_name)
+            "SELECT * FROM members_info WHERE mem_id = ? OR mem_id = ?", (
+                member.id, member_name)
         )
         instances = c.fetchall()
         c.close()
@@ -279,13 +284,16 @@ class StatCommands(commands.Cog):
             )
 
         # Begins to make the embed
-        return_embed = discord.Embed(title="User Statistics Graph", colour=discord.Color.blue())
+        return_embed = discord.Embed(
+            title="User Statistics Graph", colour=discord.Color.blue())
         return_embed.timestamp = datetime.now()
 
         # The member requesting the stats
-        return_embed.set_author(name=self.client.user.name, icon_url=self.client.user.avatar_url)
+        return_embed.set_author(
+            name=self.client.user.name, icon_url=self.client.user.avatar_url)
         # The member the info of is being requested
-        return_embed.set_footer(text=ctx.author.name, icon_url=ctx.author.avatar_url)
+        return_embed.set_footer(text=ctx.author.name,
+                                icon_url=ctx.author.avatar_url)
 
         return_embed.add_field(name="Statistic:", value=stat_type)
         return_embed.add_field(name="Graph Type:", value=graph_type)

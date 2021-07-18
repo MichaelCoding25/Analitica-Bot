@@ -14,7 +14,8 @@ client.remove_command("help")
 
 HAS_STARTED_DATABASE = False
 
-CURRENT_DIR = os.getcwd().replace("\\", "/")  # The current directory the bot is sitting in.
+# The current directory the bot is sitting in.
+CURRENT_DIR = os.getcwd().replace("\\", "/")
 
 
 @client.event
@@ -57,14 +58,15 @@ async def help(ctx, *cog):
             cogs_desc = ""
             for x in client.cogs:
                 cogs_desc += "{} - {}".format(x, client.cogs[x].__doc__) + "\n"
-            halp.add_field(name="Cogs", value=cogs_desc[0 : len(cogs_desc) - 1], inline=False)
+            halp.add_field(
+                name="Cogs", value=cogs_desc[0: len(cogs_desc) - 1], inline=False)
             cmds_desc = ""
             for y in client.walk_commands():
                 if not y.cog_name and not y.hidden:
                     cmds_desc += "{} - {}".format(y.name, y.help) + "\n"
             halp.add_field(
                 name="Uncatergorized Commands",
-                value=cmds_desc[0 : len(cmds_desc) - 1],
+                value=cmds_desc[0: len(cmds_desc) - 1],
                 inline=False,
             )
             await ctx.message.add_reaction(emoji="✉")
@@ -90,7 +92,8 @@ async def help(ctx, *cog):
                             )
                             for c in client.get_cog(y).get_commands():
                                 if not c.hidden:
-                                    halp.add_field(name=c.name, value=c.help, inline=False)
+                                    halp.add_field(
+                                        name=c.name, value=c.help, inline=False)
                             found = True
                 if not found:
                     """Reminds you if that cog doesn't exist."""

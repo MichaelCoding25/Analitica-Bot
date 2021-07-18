@@ -60,8 +60,10 @@ class Errors(commands.Cog):
                     "```css\n [ERROR} I could not find that member. Please try again. ```"
                 )
 
-        print("Ignoring exception in command {}:".format(ctx.command), file=sys.stderr)
-        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+        print("Ignoring exception in command {}:".format(
+            ctx.command), file=sys.stderr)
+        traceback.print_exception(
+            type(error), error, error.__traceback__, file=sys.stderr)
 
     @StatCommands.get_user_stats.error
     async def get_user_stats_handler(self, ctx, error):
